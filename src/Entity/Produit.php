@@ -5,8 +5,11 @@ namespace App\Entity;
 use App\Repository\ProduitRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
+#[Vich\Uploadable()]
 class Produit
 {
     #[ORM\Id]
@@ -24,7 +27,12 @@ class Produit
     private ?float $Prix = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Image()]
     private ?string $Photo = null;
+
+    #[Vich\UploadableField(mapping: 'produit',fileNameProperty: 'Photo')]
+    #[Assert\Image()]
+    private ?File $ImageFile=null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -107,6 +115,16 @@ class Produit
     public function setVendeur(?Vendeur $Vendeur): static
     {
         $this->Vendeur = $Vendeur;
+
+        return $this;
+    }
+    public function getImageFile(): ?File
+    {
+        return $this->ImageFile;
+    }
+    public function  setImageFile(?File $ImageFile): static
+    {
+        $this->ImageFile=$ImageFile;
 
         return $this;
     }
