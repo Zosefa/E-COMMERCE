@@ -10,19 +10,21 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class ClientCrudController extends AbstractCrudController
 {
+    use Trait\ReadOnlyTrait;
     public static function getEntityFqcn(): string
     {
         return Client::class;
     }
 
-    /*
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            TextField::new('Nom'),
+            TextField::new('Prenom'),
+            TextField::new('TelC'),
+            TextField::new('Adresse'),
+            TextField::new('Pays'),
+            TextField::new('users'),
         ];
     }
-    */
 }

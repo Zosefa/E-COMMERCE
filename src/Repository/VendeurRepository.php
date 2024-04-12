@@ -21,6 +21,15 @@ class VendeurRepository extends ServiceEntityRepository
         parent::__construct($registry, Vendeur::class);
     }
 
+    public function getByUser($user):int
+    {
+        return $this->createQueryBuilder('v')
+                    ->select('v.id')
+                    ->where('v.users = :user')
+                    ->setParameter('user',$user)
+                    ->getQuery()
+                    ->getSingleScalarResult();
+    }
 //    /**
 //     * @return Vendeur[] Returns an array of Vendeur objects
 //     */

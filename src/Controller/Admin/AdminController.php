@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Client;
+use App\Entity\Produit;
 use App\Entity\User;
 use App\Entity\Vendeur;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -11,10 +12,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class AdminController extends AbstractDashboardController
 {
     #[Route('/admin', name: 'admin')]
+    #[IsGranted('ROLE_ADMIN')]
     public function index(): Response
     {
          $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
@@ -30,8 +33,9 @@ class AdminController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
 //        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Client', 'fas fa-list', Client::class);
-        yield MenuItem::linkToCrud('Vendeur', 'fas fa-list', Vendeur::class);
-        yield MenuItem::linkToCrud('User', 'fas fa-list', User::class);
+        yield MenuItem::linkToCrud('Client', 'fas fa-shopping-cart', Client::class);
+        yield MenuItem::linkToCrud('Vendeur', 'fas fa-users', Vendeur::class);
+        yield MenuItem::linkToCrud('User', 'far fa-user', User::class);
+        yield MenuItem::linkToCrud('Produit', 'fab fa-product-hunt', Produit::class);
     }
 }

@@ -7,7 +7,8 @@ section{
     align-items: center;
     min-height: 100vh;
     width: 100%;
-    background-image: url('../bg/pexels-negative-space-34600.jpg');
+    /* background-image: url('../bg/pexels-negative-space-34600.jpg'); */
+    background-color: black;
     background-position: center;
     background-size: cover;
 }

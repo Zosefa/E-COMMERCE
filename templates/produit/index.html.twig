@@ -3,18 +3,34 @@
 {% block title %}Hello ProduitController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/Zosefa/Desktop/PROJET SOUTENANCE/SOUTENANCE/E-COMMERCE/src/Controller/ProduitController.php</code></li>
-        <li>Your template at <code>C:/Users/Zosefa/Desktop/PROJET SOUTENANCE/SOUTENANCE/E-COMMERCE/templates/produit/index.html.twig</code></li>
-    </ul>
-</div>
+    {{ include('partiel/flash.html.twig') }}
+    <h1>Liste</h1>
+    <table class="table table-bordered table-responsive">
+        <thead>
+            <tr>
+                <td>Produit</td>
+                <td>Description</td>
+                <td>Prix</td>
+                <td>Categorie</td>
+                <td>Image</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produits in produit %}
+                <tr>
+                    <td>{{ produits.Produit }}</td>
+                    <td>{{ produits.Description }}</td>
+                    <td>{{ produits.Prix }}</td>
+                    <td>{{ produits.Categorie.Categorie }}</td>
+                    <td>
+                        <img src="{{ vich_uploader_asset(produits, 'ImageFile') }}">
+                    </td>
+                    <td>
+                        <a href="{{ path('app_produit_update',{id:produits.id}) }}" class="btn btn-primary">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

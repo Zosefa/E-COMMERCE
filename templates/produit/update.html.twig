@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Update ProduitController!{% endblock %}
+
+{% block body %}
+    <h1>{{ Produit.Produit }}</h1>
+    <img src="{{ vich_uploader_asset(Produit, 'ImageFile') }}" alt="">
+    {{ form(form) }}
+    
+{% endblock %}

@@ -38,6 +38,35 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
+    public function getRole(String $username): string
+    {
+        return $this->createQueryBuilder('u')
+        ->select('u.roles')
+        ->where('u.username = :username')
+        ->setParameter('username',$username)
+        ->getQuery()
+        ->getSingleScalarResult();
+    }
+    public function getIdentifiant(String $username): int
+    {
+        return $this->createQueryBuilder('u')
+        ->select('u.id')
+        ->where('u.username = :username')
+        ->setParameter('username' , $username)
+        ->getQuery()      
+        ->getSingleScalarResult();
+    }
+
+    public function getEtat(String $username): bool
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.Active')
+            ->where('u.username = :username')
+            ->setParameter('username' , $username)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

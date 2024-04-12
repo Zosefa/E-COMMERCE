@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(private UrlGeneratorInterface $urlGenerator,private readonly UserRepository $repository)
     {
     }
 
@@ -44,13 +45,21 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
-            return new RedirectResponse($targetPath);
-        }
-
-        // For example:
-        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        // if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+        //     return new RedirectResponse($targetPath);
+        // }
+        $username = $request->request->get('username');
+        $role= $this->repository->getRole($username);
+        if($role == '["ROLE_CLIENT"]'){
+            return new RedirectResponse($this->urlGenerator->generate('app_boutique'));
+            throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        } else if($role == '["ROLE_VENDEUR"]'){
+            return new RedirectResponse($this->urlGenerator->generate('app_produit_liste'));
+            throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        } else {
+            return new RedirectResponse($this->urlGenerator->generate('admin'));
+            throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        }  
     }
 
     protected function getLoginUrl(Request $request): string
