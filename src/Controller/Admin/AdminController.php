@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Client;
+use App\Entity\ModePaiement;
+use App\Entity\Pays;
 use App\Entity\Produit;
 use App\Entity\User;
 use App\Entity\Vendeur;
@@ -37,5 +39,7 @@ class AdminController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Vendeur', 'fas fa-users', Vendeur::class);
         yield MenuItem::linkToCrud('User', 'far fa-user', User::class);
         yield MenuItem::linkToCrud('Produit', 'fab fa-product-hunt', Produit::class);
+        yield MenuItem::linkToCrud('ModePaiement', 'fab fa-product-hunt', ModePaiement::class);
+        yield MenuItem::linkToCrud('Pays', 'fab fa-product-hunt', Pays::class);
     }
 }

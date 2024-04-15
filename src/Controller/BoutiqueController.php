@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\PaysRepository;
+use App\Repository\ProduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -11,10 +13,13 @@ class BoutiqueController extends AbstractController
 {
     #[Route('/boutique', name: 'app_boutique')]
     #[IsGranted('ROLE_CLIENT')]
-    public function index(): Response
+    public function index(ProduitRepository $produit,PaysRepository $pays): Response
     {
-        return $this->render('boutique/index.html.twig', [
-            'controller_name' => 'BoutiqueController',
+        $produits = $produit->findAll();
+        $payss = $pays->findAll();
+        return $this->render('boutique/Boutique.html.twig', [
+            'produits' => $produits,
+            'pays' => $payss
         ]);
     }
 }

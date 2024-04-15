@@ -20,6 +20,10 @@ return [
         'path' => './assets/login.js',
         'entrypoint' => true,
     ],
+    'boutique' => [
+        'path' => './assets/boutique.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

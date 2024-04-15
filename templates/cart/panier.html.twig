@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div style="width:100%;display:flex;justify-content: space-between;">
+            <h3>PANIER</h3>
+            <a href="{{ path('app_boutique') }}" class="btn btn-danger">Retour</a>
+        </div>
+        <table class="table">
+            <thead>
+                <tr style="font-weight:bold;">
+                    <td>PRODUIT</td>
+                    <td>QUANTITE</td>
+                    <td>PRIX</td>
+                    <td>MONTANT</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for panier in paniers %}
+                    <tr>
+                        <td>{{ panier.produit.produit }}</td>
+                        <td>{{ panier.quantiter }}</td>
+                        <td>{{ panier.produit.Prix }} Ar</td>
+                        <td>{{ panier.quantiter * panier.produit.Prix }} Ar</td>
+                        <td>
+                            <a href="{{ path('app_cart_remove',{id:panier.produit.id}) }}"><i class="far fa-window-close"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <td colspan="3" style="text-align:left;font-weight:bold;">Montant Total</td>
+                <td style="text-align:left;font-weight:bold;">{{ total }} Ar</td>
+            </tfoot>
+        </table>
+        <div style="width:100%;text-align:right;display:flex;flex-direction:column;row-gap:20px;justify-content:flex-end;align-items:flex-end;">
+            <div style="width:50%;text-align:right;display:flex;column-gap:10px;">
+                <label for="modep" style="width:50%;text-align:left;">
+                    <strong>Mode de Paiement</strong>
+                </label>
+                <select class="form-select" name="modep" style="width:50% !important;">
+                    {% for modemp in ModeMp %}
+                        <option value="{{ modemp.id }}">{{ modemp.ModeP }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <a href="#" class="btn btn-success">PASSER LA COMMANDE</a>
+        </div>
+    </div>
+{% endblock %}

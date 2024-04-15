@@ -1,0 +1,135 @@
+*{margin: 0;padding: 0;box-sizing: border-box;}
+.client{
+    width: 90%;
+    margin: 5px auto 0px auto;
+}
+.section-cart{
+    width: 100%;
+    height: 10vh;
+    border-bottom: 0.5px solid grey;
+}
+.section-cart-fixed{
+    position: fixed;
+    background-color: gray !important;
+    z-index: 1000;
+}
+.section-cart .contenair{
+    width: 90%;
+    height: inherit;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.section-cart .contenair form{
+    display: flex;
+    width: 45%;
+}
+.section-cart .contenair>div{
+    height: inherit;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+.section-cart .contenair>div i{
+    font-size: 25px;
+}
+.header{
+    width: 100%;
+    height: 80vh;
+    background-color: rgba(128, 128, 128, 0.774);
+}
+
+
+
+.main{
+    width: 100%;
+    height: auto;
+}
+.main .contenair{
+    width: 90%;
+    margin: auto;
+}
+.main .contenair .produit{
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.main .contenair .produit .btn-primary{
+    border: 1px solid #0d6efd !important;
+    background-color: transparent !important;
+    color: #0d6efd  !important;
+    transition: 0.5s !important;
+}
+.main .contenair .produit .btn-primary:hover{
+    background-color: #0d6efd !important;
+    transition: 0.5s !important;
+    color: white !important;
+}
+.main .contenair .row .card{
+    height: 350px !important;
+}
+.main .contenair .row .card .card-img-top{
+    height: 200px !important;
+}
+.main .contenair .row .card .card-body{
+    height: 100px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+.main .contenair .row .card .card-body .card-title{
+    width: 100% !important;
+    text-align: center !important;
+}
+.main .contenair .row .card .card-body .prix{
+    font-weight: bold;
+}
+.main .contenair .row .card  .card-footer{
+    height: 50px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.footer{
+    width: 100%;
+    height: auto;
+    background-color: grey;
+}
+.footer .contenair{
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+.footer .contenair .Techno{
+    margin-top: 20px;
+}
+.footer .contenair .copyright{
+    width: 100%;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+.footer .contenair .copyright>div{
+    display: flex;
+    column-gap: 15px;
+}
+.footer .contenair .copyright>div i{
+    font-size: 30px;
+}
+
+
+
+
+
+
+
