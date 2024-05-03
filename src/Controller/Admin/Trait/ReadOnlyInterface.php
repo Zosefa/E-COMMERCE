@@ -6,13 +6,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 
-trait ReadOnlyTrait
+Trait ReadOnlyInterface
 {
-    public function configureAction(Actions $actions): Actions
+    public function configureActions(Actions $actions): Actions
     {
-        $actions
-            ->disable(Action::NEW,Action::EDIT,Action::DELETE)
-            ->add( Crud::PAGE_INDEX, Action::DETAIL,);
+        $actions->disable(Action::NEW,Action::EDIT,Action::DELETE);           
+        $actions->add( Crud::PAGE_INDEX, Action::DETAIL,);
         return $actions;
     }
 }

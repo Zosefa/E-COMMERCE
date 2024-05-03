@@ -46,6 +46,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $Email = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $active = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -180,5 +183,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString(): string
     {
         return $this->getUsername();
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(?bool $active): static
+    {
+        $this->active = $active;
+
+        return $this;
     }
 }

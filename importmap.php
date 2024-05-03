@@ -24,6 +24,18 @@ return [
         'path' => './assets/boutique.js',
         'entrypoint' => true,
     ],
+    'produit' => [
+        'path' => './assets/produit.js',
+        'entrypoint' => true,
+    ],
+    'commande' => [
+        'path' => './assets/commande.js',
+        'entrypoint' => true,
+    ],
+    'register' => [
+        'path' => './assets/register.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

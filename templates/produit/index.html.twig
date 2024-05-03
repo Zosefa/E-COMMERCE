@@ -1,10 +1,30 @@
-{% extends 'base.html.twig' %}
+{% extends 'produit.html.twig' %}
 
-{% block title %}Hello ProduitController!{% endblock %}
+{% block title %}Produit{% endblock %}
 
 {% block body %}
-    {{ include('partiel/flash.html.twig') }}
-    <h1>Liste</h1>
+    <div class="container">
+        {{ include('partiel/flash.html.twig') }}
+    </div>
+    <div class="container">
+        <div class="sous-menu">
+            <div class="title">
+                <h1>Liste</h1>
+                <a href="{{ path('app_produit_insert') }}" class="btn btn-outline-success btn-sm">
+                    <i class="fas fa-plus-circle"></i>
+                    AJOUTER
+                </a>
+            </div>
+            <form>
+                <div>
+                    <input type="text" class="form-control" placeholder="recherche...">
+                    <button class="btn btn-sm" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -23,11 +43,12 @@
                     <td>{{ produits.Description }}</td>
                     <td>{{ produits.Prix }} Ar</td>
                     <td>{{ produits.Categorie.Categorie }}</td>
-                    <td style="height:100px !important;">
-                        <img src="{{ vich_uploader_asset(produits, 'ImageFile') }}" class="img-fluid">
+                    <td class="pimage">
+                        <img src="{{ vich_uploader_asset(produits, 'ImageFile') }}" class="img-fluid" style="width:100px !important;">
                     </td>
-                    <td>
-                        <a href="{{ path('app_produit_update',{id:produits.id}) }}" class="btn btn-primary">Edit</a>
+                    <td style="display:flex !important;column-gap:2px !important;align-items:center !important">
+                        <a href="{{ path('app_produit_update',{id:produits.id}) }}" class="btn btn-primary btn-sm">Edit</a>
+                        <button class="btn btn-danger btn-sm">Delete</button>
                     </td>
                 </tr>
             {% endfor %}

@@ -1,7 +1,28 @@
-{% extends 'base.html.twig' %}
+{% extends 'produit.html.twig' %}
 
 {% block title %}Hello ProduitController!{% endblock %}
 
 {% block body %}
-    {{ form(form) }}
+    {{ form_start(form) }}
+            <div class="row">  
+                <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12">
+                    {{ form_row(form.Produit) }}
+                </div>
+                <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12">
+                    {{ form_row(form.Prix) }}
+                </div>
+                <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12">
+                    {{ form_row(form.Categorie) }}
+                </div>
+                <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12">
+                    {{ form_row(form.ImageFile) }}
+                </div>
+                {{ form_row(form.Description) }}
+            </div>
+            <div style="width:100%;display:flex;justify-content:space-between;align-items:center;">
+                <a href="{{ path('app_produit_liste') }}" class="btn btn-danger">ANNULER</a>
+                <button class="btn btn-success" type="submit">AJOUTER</button>
+            </div>
+            
+        {{ form_end(form) }}
 {% endblock %}

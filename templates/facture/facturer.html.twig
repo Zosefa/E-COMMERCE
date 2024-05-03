@@ -1,0 +1,38 @@
+{% extends 'produit.html.twig' %}
+
+{% block title %}Facture Generer{% endblock %}
+
+{% block body %}
+    <div>
+        <a href="{{ path('app_facture_index') }}" class="btn btn-primary">COMMANDE NON FACTURER</a>
+        <a href="{{ path('app_facture_facturer') }}" class="btn btn-secondary">COMMANDE FACTURER</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>ID</td>
+                {# <td>DateCommande</td> #}
+                <td>Produit</td>
+                <td>Qte</td>
+                <td>Client</td>
+                <td>Paiment</td>
+                <td>Facture</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for commandes in commande %}
+                <tr>
+                    <td>{{ commandes.id }}</td>
+                    {# <td>{{ commandes.DateCommande }}</td> #}
+                    <td>{{ commandes.Produit.Produit }}</td>
+                    <td>{{ commandes.QteC }}</td>
+                    <td>{{ commandes.Client.Nom }}</td>
+                    <td>{{ commandes.ModeP }}</td>
+                    <td>
+                        <button class="btn btn-success btn-sm">VOIR LA FACTURE</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

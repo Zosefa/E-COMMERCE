@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Client;
 use App\Entity\User;
 use App\Entity\Vendeur;
-use App\Repository\PaysRepository;
 use App\Repository\UserRepository;
 use App\Security\LoginAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,6 +32,7 @@ class InscriptionController extends AbstractController
                     $user->setUsername($post['username'])
                         ->setRoles(['ROLE_ADMIN'])
                         ->setEmail($post['email'])
+                        ->setActive(true)
                         ->setPassword($userPasswordHasher->hashPassword($user,$password))
                         ->setConfirm($userPasswordHasher->hashPassword($user,$confirm));
                     $entityManager->persist($user);
@@ -49,9 +49,8 @@ class InscriptionController extends AbstractController
 
 
     #[Route('/inscription/client', name: 'admin.inscription.client',methods: ['POST','GET'])]
-    public function registerclient(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager,UserRepository $userRepository,PaysRepository $paysrepository): Response
+    public function registerclient(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager,UserRepository $userRepository): Response
     {
-        $pays = $paysrepository->findAll();
         if($request->isMethod('POST')){
             $post=$request->request->all();
             if(isset($post['submit'])){
@@ -64,35 +63,31 @@ class InscriptionController extends AbstractController
                     $user->setUsername($post['username'])
                         ->setEmail($post['email'])
                         ->setRoles(['ROLE_CLIENT'])
+                        ->setActive(true)
                         ->setPassword($userPasswordHasher->hashPassword($user,$password))
                         ->setConfirm($userPasswordHasher->hashPassword($user,$confirm));
                     $entityManager->persist($user);
                     $entityManager->flush();
-                    $valuepays = $paysrepository->find($post['pays']);
                     $id=$userRepository->getIdentifiant($username);
                     $Users = $userRepository->find($id);
                     $client->setNom($post['Nom'])
                         ->setPrenom($post['Prenom'])
                         ->setAdresse($post['adresse'])
                         ->setTelC($post['Tel'])
-                        ->setUsers($Users)
-                        ->setPays($valuepays);
+                        ->setUsers($Users);
                     $entityManager->persist($client);
                     $entityManager->flush();
                     return $security->login($user, LoginAuthenticator::class, 'main');
                 }
             }
         }
-        return $this->render('inscription/inscriptionClient.html.twig',[
-            'Pays'=>$pays
-        ]);
+        return $this->render('inscription/inscriptionClient.html.twig',[]);
     }
 
 
     #[Route('/inscription/vendeur', name: 'admin.inscription.vendeur')]
-    public function registervendeur(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager, UserRepository $userRepository, PaysRepository $paysrepository): Response
+    public function registervendeur(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
-        $pays = $paysrepository->findAll();
         if($request->isMethod('POST')){
             $post=$request->request->all();
             if(isset($post['submit'])){
@@ -105,26 +100,23 @@ class InscriptionController extends AbstractController
                     $user->setUsername($post['username'])
                         ->setEmail($post['email'])
                         ->setRoles(['ROLE_VENDEUR'])
+                        ->setActive(true)
                         ->setPassword($userPasswordHasher->hashPassword($user,$password))
                         ->setConfirm($userPasswordHasher->hashPassword($user,$confirm));
                     $entityManager->persist($user);
                     $entityManager->flush();
-                    $valuepays = $paysrepository->find($post['pays']);
                     $id=$userRepository->getIdentifiant($username);
                     $Users = $userRepository->find($id);
                     $vendeur->setVendeur($post['Nom'])
                         ->setSiege($post['Siege'])
                         ->setTelV($post['Tel'])
-                        ->setUsers($Users)
-                        ->setPays($valuepays);
+                        ->setUsers($Users);
                     $entityManager->persist($vendeur);
                     $entityManager->flush();
                     return $security->login($user, LoginAuthenticator::class, 'main');
                 }
             }
         }
-        return $this->render('inscription/inscriptionVendeur.html.twig',[
-            'Pays' => $pays
-        ]);
+        return $this->render('inscription/inscriptionVendeur.html.twig',[]);
     }
 }

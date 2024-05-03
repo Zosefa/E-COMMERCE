@@ -42,6 +42,9 @@ class Produit
     #[ORM\JoinColumn(nullable: false)]
     private ?Vendeur $Vendeur = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $QteDispo = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -127,5 +130,21 @@ class Produit
         $this->ImageFile=$ImageFile;
 
         return $this;
+    }
+
+    public function getQteDispo(): ?int
+    {
+        return $this->QteDispo;
+    }
+
+    public function setQteDispo(?int $QteDispo): static
+    {
+        $this->QteDispo = $QteDispo;
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return $this->getProduit();
     }
 }

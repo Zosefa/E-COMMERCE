@@ -19,24 +19,24 @@
         <div class="form-value">
             <form method="post">
                 {% if error %}
-                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    <div class="alert alert-danger">Il y a une Erreur</div>
                 {% endif %}
 
                 {% if app.user %}
-                    <div class="mb-3">
+                    <div class="mb-3 alert alert-success">
                         You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
                     </div>
                 {% endif %}
                 <h4>CONNECTEZ-VOUZ</h4>
                 <div class="inputbox">
                     <i class="fas fa-user"></i>
-                    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
-                    <label for="inputUsername">Username</label>
+                    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-controll" autocomplete="username" required autofocus>
+                    <label for="inputUsername">Username ou Email</label>
                 </div>
                 <div class="inputbox">
                     <i class="far fa-eye"></i>
                     <i class="far fa-eye-slash"></i>
-                    <input type="password" name="password" id="inputPassword" class="form-control pass" autocomplete="current-password" required>
+                    <input type="password" name="password" id="inputPassword" class="form-controll pass" autocomplete="current-password" required>
                     <label for="inputPassword">Password</label>
                 </div>
                 <input type="hidden" name="_csrf_token"

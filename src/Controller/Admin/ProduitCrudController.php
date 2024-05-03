@@ -13,7 +13,6 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ProduitCrudController extends AbstractCrudController
 {
-    use Trait\ReadOnlyTrait;
     public static function getEntityFqcn(): string
     {
         return Produit::class;
@@ -26,8 +25,8 @@ class ProduitCrudController extends AbstractCrudController
             TextEditorField::new('description'),
             IntegerField::new('Prix'),
             TextField::new('ImageFile')->setFormType(VichImageType::class)->onlyWhenUpdating(),
-            ImageField::new('Photo')->setBasePath('images/produit')->onlyOnIndex(),
-            // TextField::new('Vendeur'),
+            ImageField::new('Photo')->setBasePath('images/produit'),
+            TextField::new('Vendeur'),
         ];
     }
 }

@@ -31,10 +31,6 @@ class Client
     #[ORM\JoinColumn(nullable: false)]
     private ?User $users = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Pays $Pays = null;
-
     #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: 'Client')]
     private Collection $commandes;
 
@@ -108,18 +104,6 @@ class Client
         return $this;
     }
 
-    public function getPays(): ?Pays
-    {
-        return $this->Pays;
-    }
-
-    public function setPays(?Pays $Pays): static
-    {
-        $this->Pays = $Pays;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Commande>
      */
@@ -148,5 +132,9 @@ class Client
         }
 
         return $this;
+    }
+    public function __toString()
+    {
+        return $this->getNom();
     }
 }

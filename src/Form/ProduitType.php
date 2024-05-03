@@ -29,7 +29,6 @@ class ProduitType extends AbstractType
                 'class' => Categorie::class,
 'choice_label' => 'Categorie',
             ])
-            ->add('Envoyer',SubmitType::class)
         ;
     }
 

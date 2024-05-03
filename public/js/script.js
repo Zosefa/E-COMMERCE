@@ -1,5 +1,6 @@
 new WOW().init();
 $(document).ready(function(){
+    alert('Bonjour');
     $('.btn-suivant').click(function(){
         $('.user').css({"display":'flex'});
         $('.client').css({"display":'none'});
@@ -15,3 +16,4 @@ $(document).ready(function(){
         $('.suivant').css({"display":'flex'});
     });
 });
+

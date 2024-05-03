@@ -60,7 +60,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function getEtat(String $username): bool
     {
         return $this->createQueryBuilder('u')
-            ->select('u.Active')
+            ->select('u.active')
             ->where('u.username = :username')
             ->setParameter('username' , $username)
             ->getQuery()

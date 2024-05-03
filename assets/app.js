@@ -1,7 +1,6 @@
 import './bootstrap/css/bootstrap.min.css';
-// import './styles/style.css';
+import './styles/app.css';
 import './fontawesome/css/all.css';
-// import './styles/register.css';
 
 
 import './bootstrap/js/bootstrap.min.js';

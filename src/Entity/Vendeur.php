@@ -22,10 +22,6 @@ class Vendeur
     #[ORM\Column(length: 255)]
     private ?string $TelV = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Pays $Pays = null;
-
     #[ORM\OneToOne(inversedBy: 'vendeur', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $users = null;
@@ -67,18 +63,6 @@ class Vendeur
     public function setTelV(string $TelV): static
     {
         $this->TelV = $TelV;
-
-        return $this;
-    }
-
-    public function getPays(): ?Pays
-    {
-        return $this->Pays;
-    }
-
-    public function setPays(?Pays $Pays): static
-    {
-        $this->Pays = $Pays;
 
         return $this;
     }

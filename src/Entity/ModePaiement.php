@@ -47,4 +47,8 @@ class ModePaiement
 
         return $this;
     }
+    public function __toString()
+    {
+        return $this->getModeP();
+    }
 }

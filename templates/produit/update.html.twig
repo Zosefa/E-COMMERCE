@@ -1,10 +1,38 @@
-{% extends 'base.html.twig' %}
+{% extends 'produit.html.twig' %}
 
-{% block title %}Update ProduitController!{% endblock %}
+{% block title %}Modification Produit{% endblock %}
 
 {% block body %}
-    <h1>{{ Produit.Produit }}</h1>
-    <img src="{{ vich_uploader_asset(Produit, 'ImageFile') }}" alt="">
-    {{ form(form) }}
+    <div class="container">
+        <div style="display:flex;column-gap:20px;align-items:center">
+            <img src="{{ vich_uploader_asset(Produit, 'ImageFile') }}" alt="" style="width:200px !important">
+            <h1>{{ Produit.Produit }}</h1>
+        </div>
+        {{ form_start(form) }}
+            <div class="row">  
+                <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12">
+                    {{ form_row(form.Produit) }}
+                </div>
+                <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12">
+                    {{ form_row(form.Prix) }}
+                </div>
+                <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12">
+                    {{ form_row(form.Categorie) }}
+                </div>
+                <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12">
+                    {{ form_row(form.ImageFile) }}
+                </div>
+                {{ form_row(form.Description) }}
+            </div>
+            <div style="width:100%;display:flex;justify-content:space-between;align-items:center;">
+                <a href="{{ path('app_produit_liste') }}" class="btn btn-danger">ANNULER</a>
+                <button class="btn btn-primary" type="submit">MODIFIER</button>
+            </div>
+            
+        {{ form_end(form) }}
+    </div>
+    
+    
+    
     
 {% endblock %}

@@ -22,16 +22,22 @@ class Commande
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $DateCommande = null;
 
-    #[ORM\ManyToMany(targetEntity: Produit::class)]
-    private Collection $Produit;
-
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     private ?Client $Client = null;
 
-    public function __construct()
-    {
-        $this->Produit = new ArrayCollection();
-    }
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Produit $Produit = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?ModePaiement $ModeP = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $Facture = null;
+
+    #[ORM\ManyToOne]
+    private ?Vendeur $Vendeur = null;
 
     public function getId(): ?int
     {
@@ -62,30 +68,6 @@ class Commande
         return $this;
     }
 
-    /**
-     * @return Collection<int, Produit>
-     */
-    public function getProduit(): Collection
-    {
-        return $this->Produit;
-    }
-
-    public function addProduit(Produit $produit): static
-    {
-        if (!$this->Produit->contains($produit)) {
-            $this->Produit->add($produit);
-        }
-
-        return $this;
-    }
-
-    public function removeProduit(Produit $produit): static
-    {
-        $this->Produit->removeElement($produit);
-
-        return $this;
-    }
-
     public function getClient(): ?Client
     {
         return $this->Client;
@@ -94,6 +76,58 @@ class Commande
     public function setClient(?Client $Client): static
     {
         $this->Client = $Client;
+
+        return $this;
+    }
+
+    public function getProduit(): ?Produit
+    {
+        return $this->Produit;
+    }
+
+    public function setProduit(?Produit $Produit): static
+    {
+        $this->Produit = $Produit;
+
+        return $this;
+    }
+
+    public function getModeP(): ?ModePaiement
+    {
+        return $this->ModeP;
+    }
+
+    public function setModeP(?ModePaiement $ModeP): static
+    {
+        $this->ModeP = $ModeP;
+
+        return $this;
+    }
+
+    public function isFacture(): ?bool
+    {
+        return $this->Facture;
+    }
+
+    public function setFacture(?bool $Facture): static
+    {
+        $this->Facture = $Facture;
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return $this->DateCommande;
+    }
+
+    public function getVendeur(): ?Vendeur
+    {
+        return $this->Vendeur;
+    }
+
+    public function setVendeur(?Vendeur $Vendeur): static
+    {
+        $this->Vendeur = $Vendeur;
 
         return $this;
     }

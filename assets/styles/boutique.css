@@ -7,6 +7,7 @@
     width: 100%;
     height: 10vh;
     border-bottom: 0.5px solid grey;
+    background: transparent !important;
 }
 .section-cart-fixed{
     position: fixed;
@@ -37,7 +38,10 @@
 .header{
     width: 100%;
     height: 80vh;
-    background-color: rgba(128, 128, 128, 0.774);
+    background:url('../bg/hero-bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 
@@ -50,7 +54,25 @@
     width: 90%;
     margin: auto;
 }
+.main .contenair .text-boutique{
+    width: 100%;
+    height: 40vh;
+    background-color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 20px;
+}
 .main .contenair .produit{
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.main .contenair .boutique{
     width: 100%;
     height: 10vh;
     display: flex;
@@ -63,7 +85,34 @@
     color: #0d6efd  !important;
     transition: 0.5s !important;
 }
+.main .contenair .boutique .btn-primary{
+    border: 1px solid #0d6efd !important;
+    background-color: transparent !important;
+    color: #0d6efd  !important;
+    transition: 0.5s !important;
+}
 .main .contenair .produit .btn-primary:hover{
+    background-color: #0d6efd !important;
+    transition: 0.5s !important;
+    color: white !important;
+}
+.main .detail-boutique{
+    width: 100% !important;
+    text-decoration: none !important;
+    color: white !important;
+}
+.main .detail-boutique div{
+    width: 100% !important;
+    height: 40vh;
+    background: linear-gradient(70deg, rgba(0, 255, 255, 0.678),rgba(0, 0, 255, 0.678));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 100px;
+}
+.main .contenair .boutique .btn-primary:hover{
     background-color: #0d6efd !important;
     transition: 0.5s !important;
     color: white !important;
@@ -99,7 +148,7 @@
 .footer{
     width: 100%;
     height: auto;
-    background-color: grey;
+    background-color: blue;
 }
 .footer .contenair{
     width: 90%;

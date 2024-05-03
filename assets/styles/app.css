@@ -1,3 +1,55 @@
-body {
-    background-color: skyblue;
+.bg{
+    background-image: url('../bg/hero-bg.png') !important;
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
 }
+.text{
+    width: 80%;
+    margin: auto;
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.text{
+    color: white;
+}
+.bg .container{
+    height: 60vh !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+.client{
+    width: 40%;
+    height: 40vh;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+}
+.vendeur{
+    width: 40%;
+    height: 40vh;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+}
+

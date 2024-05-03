@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title>INSCRIPTION</title>
     {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
+        {{ encore_entry_link_tags('register') }}
     {% endblock %}
     {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-        {% block importmap %} {{ importmap('app') }} {% endblock %}
+        {{ encore_entry_script_tags('register') }}
+        {% block importmap %} {{ importmap('register') }} {% endblock %}
     {% endblock %}
 
     <link rel="stylesheet" type="text/css" href="{{ asset('wow/animate.css') }}">
@@ -53,11 +53,6 @@
                         <input type="text" name="Siege" id="siege" class="form-control" placeholder="Siege">
                         <label for="siege">Siege</label>
                     </div>
-                    <select name="pays" class="form-select">
-                        {%  for Payss in Pays %}
-                            <option value="{{ Payss.id }}">{{ Payss.pays }}</option>
-                        {% endfor %}
-                    </select>
                 </div>
                 <div>
                     <div class="suivant">

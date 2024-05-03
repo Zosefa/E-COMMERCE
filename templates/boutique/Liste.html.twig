@@ -1,0 +1,34 @@
+{% extends 'boutique/Boutique.html.twig' %}
+{% block title %} Boutique de ..... {% endblock %}
+{% block body %}
+    <div class="main">
+        <div class="container">
+            <div class="produit">
+                <h4>PRODUIT RECENT</h4>
+                <button class="btn btn-primary">VOIR TOUS</button>
+            </div>       
+            
+            <div class="row">
+                {% for produit in produits %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                        <div class=" card " style="margin:20px 2px;">
+                            <img class="card-img-top" src="{{ vich_uploader_asset(produit, 'ImageFile') }}" alt="Card image">
+                            <div class="card-body">
+                                <h4 class="card-title">{{ produit.Produit }}</h4>
+                                <p class="prix">{{ produit.Prix }} Ar</p>
+                            </div>
+                            <div class="card-footer">
+                                <div>
+                                    <button class="btn btn-primary view">View</button>
+                                    <a href="{{ path('app_cart_add',{id:produit.id,boutique:boutiques}) }}"class="btn btn-warning">Add To Cart</a>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>  
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    </div>
+        </div>
+{% endblock %}

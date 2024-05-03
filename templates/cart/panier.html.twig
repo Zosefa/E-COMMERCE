@@ -6,7 +6,7 @@
     <div class="container">
         <div style="width:100%;display:flex;justify-content: space-between;">
             <h3>PANIER</h3>
-            <a href="{{ path('app_boutique') }}" class="btn btn-danger">Retour</a>
+            <a href="{{ path('boutique_liste',{boutique:boutique}) }}" class="btn btn-danger">Retour</a>
         </div>
         <table class="table">
             <thead>
@@ -22,7 +22,11 @@
                 {% for panier in paniers %}
                     <tr>
                         <td>{{ panier.produit.produit }}</td>
-                        <td>{{ panier.quantiter }}</td>
+                        <td>
+                            <a href="{{ path('app_cart_removeOne',{id:panier.produit.id}) }}"><i class="fas fa-minus"></i></a>
+                            {{ panier.quantiter }}
+                            <a href="{{ path('app_cart_addOne',{id:panier.produit.id}) }}"><i class="fas fa-plus"></i></a>
+                        </td>
                         <td>{{ panier.produit.Prix }} Ar</td>
                         <td>{{ panier.quantiter * panier.produit.Prix }} Ar</td>
                         <td>
@@ -41,13 +45,15 @@
                 <label for="modep" style="width:50%;text-align:left;">
                     <strong>Mode de Paiement</strong>
                 </label>
-                <select class="form-select" name="modep" style="width:50% !important;">
-                    {% for modemp in ModeMp %}
-                        <option value="{{ modemp.id }}">{{ modemp.ModeP }}</option>
-                    {% endfor %}
-                </select>
+                <form action="{{ path('app_commande_valider') }}" method="post" style="display:flex;flex-direction: column;row-gap: 10px;">
+                    <select class="form-select" name="modep" style="width:100% !important;">
+                        {% for modemp in ModeMp %}
+                            <option value="{{ modemp.id }}">{{ modemp.ModeP }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" value="PASSER LA COMMANDE" class="btn btn-success">
+                </form>
             </div>
-            <a href="#" class="btn btn-success">PASSER LA COMMANDE</a>
         </div>
     </div>
 {% endblock %}

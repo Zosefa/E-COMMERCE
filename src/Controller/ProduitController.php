@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Produit;
 use App\Form\ProduitType;
 use App\Repository\ProduitRepository;
+use App\Repository\UserRepository;
 use App\Repository\VendeurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,9 +19,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class ProduitController extends AbstractController
 {
     #[Route('/',name: '_liste')]
-    public function liste(ProduitRepository $produitRepository): Response
+    public function liste(ProduitRepository $produitRepository,VendeurRepository $vendeurrepository): Response
     {
-        $produit = $produitRepository->findAll();
+        $user = $this->getUser();
+        $idvendeur = $vendeurrepository->getByUser($user);
+        $vendeur = $vendeurrepository->find($idvendeur);
+        $produit = $produitRepository->findBy(['Vendeur'=>$vendeur]);
         return $this->render('produit/index.html.twig',[
             'produit' => $produit
         ]);
@@ -39,6 +43,7 @@ class ProduitController extends AbstractController
             $produit->setVendeur($vendeur);
             $em->persist($produit);
             $em->flush();
+            $this->addFlash('success','PRODUIT ENREGISTRER');
             return $this->redirectToRoute('app_produit_liste');
         }
         return $this->render('produit/insert.html.twig', [

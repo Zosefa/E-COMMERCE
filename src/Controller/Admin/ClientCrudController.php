@@ -10,7 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class ClientCrudController extends AbstractCrudController
 {
-    use Trait\ReadOnlyTrait;
+    use Trait\ReadOnlyInterface;
     public static function getEntityFqcn(): string
     {
         return Client::class;
@@ -23,7 +23,6 @@ class ClientCrudController extends AbstractCrudController
             TextField::new('Prenom'),
             TextField::new('TelC'),
             TextField::new('Adresse'),
-            TextField::new('Pays'),
             TextField::new('users'),
         ];
     }
