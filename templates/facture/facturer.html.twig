@@ -1,37 +1,33 @@
 {% extends 'produit.html.twig' %}
 
-{% block title %}Facture Generer{% endblock %}
+{% block title %}Facture{% endblock %}
 
 {% block body %}
-    <div>
-        <a href="{{ path('app_facture_index') }}" class="btn btn-primary">COMMANDE NON FACTURER</a>
-        <a href="{{ path('app_facture_facturer') }}" class="btn btn-secondary">COMMANDE FACTURER</a>
+    <div class="mt-4 mb-2">
+        <a href="{{ path('app_facture_index') }}" class="btn btn-primary">COMMANDE NON FACTUREE</a>
+        <a href="{{ path('app_facture_facturer') }}" class="btn btn-secondary">COMMANDE FACTUREE</a>
     </div>
-    <table class="table">
+    <table class="table table-hover">
         <thead>
             <tr>
-                <td>ID</td>
                 {# <td>DateCommande</td> #}
-                <td>Produit</td>
-                <td>Qte</td>
-                <td>Client</td>
-                <td>Paiment</td>
-                <td>Facture</td>
+                <td>Numero Facture</td>
+                <td>Date Facture</td>
+                {# <td>Client</td> #}
             </tr>
         </thead>
         <tbody>
             {% for commandes in commande %}
                 <tr>
-                    <td>{{ commandes.id }}</td>
-                    {# <td>{{ commandes.DateCommande }}</td> #}
-                    <td>{{ commandes.Produit.Produit }}</td>
-                    <td>{{ commandes.QteC }}</td>
-                    <td>{{ commandes.Client.Nom }}</td>
-                    <td>{{ commandes.ModeP }}</td>
+                    <td>{{ commandes.NumeroFacture }}</td>
                     <td>
-                        <button class="btn btn-success btn-sm">VOIR LA FACTURE</button>
+                        <a href="{{ path('app_facture_voire',{id:commandes.id}) }}" class="btn btn-success btn-sm">VOIR</a>
                     </td>
-                </tr>
+                    {# <td>{{ commandes.ModeP }}</td> #}
+            {% else %}
+            <tr>
+                <td colspan="7">AUCUN COMMANDE EFFECTUER</td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>

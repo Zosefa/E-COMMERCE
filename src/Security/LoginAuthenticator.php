@@ -80,7 +80,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($this->urlGenerator->generate('app_produit_liste'));
             throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
         } else {
-            return new RedirectResponse($this->urlGenerator->generate('admin'));
+            return new RedirectResponse($this->urlGenerator->generate('dashboard'));
             throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
         }   
     }

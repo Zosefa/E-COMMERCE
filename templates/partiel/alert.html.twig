@@ -1,0 +1,5 @@
+{% for type, message in app.flashes %}
+    <script>
+        alert({{ message | join('. ') }});
+    </script>
+{% endfor %}

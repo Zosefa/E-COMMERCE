@@ -3,55 +3,107 @@
 {% block title %}Produit{% endblock %}
 
 {% block body %}
-    <div class="container">
-        {{ include('partiel/flash.html.twig') }}
-    </div>
-    <div class="container">
-        <div class="sous-menu">
-            <div class="title">
-                <h1>Liste</h1>
+<div class="container">
+    {{ include('partiel/flash.html.twig') }}
+</div>
+<div class="container list mx-auto">
+    <div class="sous-menu">
+        <div class="title">
+            <div class="titre">
+                <h1 class="text-secondary">Liste</h1>
+            </div>
+            <div class="nouveau mt-2">
+                <a href="{{ path('app_produit_liste') }}" class="btn btn-outline-warning btn-sm">
+                    <i class="fas fa-undo-alt"></i>
+                </a>
                 <a href="{{ path('app_produit_insert') }}" class="btn btn-outline-success btn-sm">
                     <i class="fas fa-plus-circle"></i>
                     AJOUTER
                 </a>
             </div>
-            <form>
-                <div>
-                    <input type="text" class="form-control" placeholder="recherche...">
-                    <button class="btn btn-sm" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </form>
         </div>
+
+        <form action='' method="POST" class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="recherche..." name="recherche">
+            <button class="btn btn-secondary" type="submit" name='rech'>
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
     </div>
-    <table class="table">
+    <table class="table table-responsive table-hover" style="text-align: center;">
         <thead>
             <tr>
                 <td>Produit</td>
                 <td>Description</td>
                 <td>Prix</td>
                 <td>Categorie</td>
+                <td>Stock</td>
                 <td>Image</td>
                 <td>Action</td>
             </tr>
         </thead>
         <tbody>
             {% for produits in produit %}
-                <tr>
-                    <td>{{ produits.Produit }}</td>
-                    <td>{{ produits.Description }}</td>
-                    <td>{{ produits.Prix }} Ar</td>
-                    <td>{{ produits.Categorie.Categorie }}</td>
-                    <td class="pimage">
-                        <img src="{{ vich_uploader_asset(produits, 'ImageFile') }}" class="img-fluid" style="width:100px !important;">
-                    </td>
-                    <td style="display:flex !important;column-gap:2px !important;align-items:center !important">
-                        <a href="{{ path('app_produit_update',{id:produits.id}) }}" class="btn btn-primary btn-sm">Edit</a>
-                        <button class="btn btn-danger btn-sm">Delete</button>
-                    </td>
-                </tr>
+            <tr>
+                <td>{{ produits.Produit }}</td>
+                <td>{{ produits.Description }}</td>
+                <td>{{ produits.Prix }} Ar</td>
+                <td>{{ produits.Categorie.Categorie }}</td>
+                <td>{{ produits.QteDispo }}</td>
+                <td class="pimage" style="text-align: center; align-content: center;">
+                    <img src="{{ vich_uploader_asset(produits, 'ImageFile') }}" class="img-fluid"
+                        style="width:100px !important;">
+                </td>
+                <td style="text-align: center; align-content: center;">
+                    <a href="{{ path('app_produit_cryptage',{id:produits.id}) }}"
+                        class="btn btn-outline-primary btn-sm"><i class="fas fa-edit"></i></a>
+                    <a class="btn btn-outline-danger btn-sm" href="{{ path('app_produit_delete',{id:produits.id}) }}"><i
+                            class="fas fa-trash"></i></a>
+
+                    <button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#myModal{{ produits.id }}">
+                        <i class="fas fa-plus-circle"></i>
+                    </button>
+
+                    <!-- The Modal -->
+                    <div class="modal" id="myModal{{ produits.id }}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">AJOUTER DU STOCK DE {{ produits.Produit }}</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <form action="{{ path('app_produit_stock',{id:produits.id}) }}" method="post">
+                                        <input type="number" placeholder="Ajout de Stock" class="form-control" name="stock">
+                                        <div style="width: 100%;display: flex;justify-content: space-between;align-items: center;margin-top: 10px;">
+                                            <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                            <input type="submit" class="btn btn-primary btn-sm" value="Ajouter">
+                                        </div> 
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7">AUCUN PRODUIT ENREGISTRER</td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
-{% endblock %}
+    {# <div class="d-flex">
+        {% if page > 1 %}
+            <a href="{{ path('app_produit_liste',{page: page - 1}) }}" class="btn btn-secondary">precedent</a>
+        {% endif %}
+        {% if page < maxpage %}
+            <a href="{{ path('app_produit_liste',{page: page + 1}) }}" class="btn btn-secondary">suivant</a>
+        {% endif %}
+    </div> #}
+    {% if page != 0 %}
+        {{ knp_pagination_render(produit) }}
+    {% endif %}
+    {% endblock %}

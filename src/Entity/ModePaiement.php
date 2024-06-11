@@ -19,6 +19,9 @@ class ModePaiement
     #[ORM\Column(length: 255)]
     private ?string $ModeP = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $slug = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -50,5 +53,17 @@ class ModePaiement
     public function __toString()
     {
         return $this->getModeP();
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }

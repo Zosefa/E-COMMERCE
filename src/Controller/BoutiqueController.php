@@ -34,9 +34,12 @@ class BoutiqueController extends AbstractController
     #[Route('/{boutique}',name: '_liste')]
     public function liste($boutique ,ProduitRepository $repositoryproduit,VendeurRepository $vendeurrepository,SessionInterface $session){
         $vendeur = $vendeurrepository->findBy(['Vendeur' => $boutique]);
+        foreach ($vendeur as $value) {
+            $leVendeur = $value;
+        }
         $boutiqueSession = $session->get('boutique','');
         $boutiqueSession = $session->set('boutique',$boutique);
-        $produit = $repositoryproduit->findByvendeur($vendeur);
+        $produit = $repositoryproduit->findByvendeur($leVendeur);
         return $this->render('boutique/liste.html.twig',[
             'produits' => $produit,
             'boutiques' => $boutique

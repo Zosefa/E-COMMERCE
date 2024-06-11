@@ -37,7 +37,7 @@ class InscriptionController extends AbstractController
                         ->setConfirm($userPasswordHasher->hashPassword($user,$confirm));
                     $entityManager->persist($user);
                     $entityManager->flush();
-                    return $security->login($user, LoginAuthenticator::class, 'main');
+                    return $this->redirectToRoute('admin');
                 }else{
                     $this->addFlash('danger','Le mot de Passe et la Confirmation doivent etre le meme');
                     return $this->redirectToRoute('admin.inscription');
@@ -64,6 +64,7 @@ class InscriptionController extends AbstractController
                         ->setEmail($post['email'])
                         ->setRoles(['ROLE_CLIENT'])
                         ->setActive(true)
+                        ->setDescativer(false)
                         ->setPassword($userPasswordHasher->hashPassword($user,$password))
                         ->setConfirm($userPasswordHasher->hashPassword($user,$confirm));
                     $entityManager->persist($user);
@@ -100,7 +101,8 @@ class InscriptionController extends AbstractController
                     $user->setUsername($post['username'])
                         ->setEmail($post['email'])
                         ->setRoles(['ROLE_VENDEUR'])
-                        ->setActive(true)
+                        ->setActive(false)
+                        ->setDescativer(false)
                         ->setPassword($userPasswordHasher->hashPassword($user,$password))
                         ->setConfirm($userPasswordHasher->hashPassword($user,$confirm));
                     $entityManager->persist($user);
@@ -113,7 +115,8 @@ class InscriptionController extends AbstractController
                         ->setUsers($Users);
                     $entityManager->persist($vendeur);
                     $entityManager->flush();
-                    return $security->login($user, LoginAuthenticator::class, 'main');
+                    $this->addFlash('success',"COMPTE INSCRITE EN ATTANTE D'ACTIVATION");
+                    return $this->redirectToRoute('app_login');
                 }
             }
         }

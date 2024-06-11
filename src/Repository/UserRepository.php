@@ -66,6 +66,51 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getSingleScalarResult();
     }
+    public function UserActif(bool $actif=true,bool $desactiver=false): array
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u')
+            ->where('u.active = :active')
+            ->andWhere('u.Descativer = :desactiver')
+            ->setParameter('active' , $actif)
+            ->setParameter('desactiver' , $desactiver)
+            ->getQuery()
+            ->getResult();
+    }
+    public function UserNonActif(bool $actif=false,bool $desactiver=false): array
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u')
+            ->where('u.active = :active')
+            ->andWhere('u.Descativer = :desactiver')
+            ->setParameter('active' , $actif)
+            ->setParameter('desactiver' , $desactiver)
+            ->getQuery()
+            ->getResult();
+    }
+    public function Descativer(bool $actif=false,bool $desactiver=true): array
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u')
+            ->where('u.active = :active')
+            ->andWhere('u.Descativer = :desactiver')
+            ->setParameter('active' , $actif)
+            ->setParameter('desactiver' , $desactiver)
+            ->getQuery()
+            ->getResult();
+    }
+
+//     public function findNonAdminUsers(): array
+// {
+//     return $this->createQueryBuilder('user')
+//         ->select('user')
+//         ->where('JSONB_EXISTS(user.roles, :roleClient)')
+//         ->orWhere('JSONB_EXISTS(user.roles, :roleVendeur)')
+//         ->setParameter('roleClient', 'ROLE_CLIENT')
+//         ->setParameter('roleVendeur', 'ROLE_VENDEUR')
+//         ->getQuery()
+//         ->getResult();
+// }
 
 //    /**
 //     * @return User[] Returns an array of User objects

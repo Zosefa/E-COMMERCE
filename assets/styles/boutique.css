@@ -1,18 +1,30 @@
 *{margin: 0;padding: 0;box-sizing: border-box;}
 .client{
     width: 90%;
-    margin: 5px auto 0px auto;
+    padding-top: 8px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #326771;
+    color: white !important;
+}
+.client div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 50px;
 }
 .section-cart{
     width: 100%;
     height: 10vh;
-    border-bottom: 0.5px solid grey;
-    background: transparent !important;
+    background: #326771 !important; color: white !important;
 }
 .section-cart-fixed{
     position: fixed;
-    background-color: gray !important;
+    background-color: #326771  !important;
     z-index: 1000;
+    color: white !important;
 }
 .section-cart .contenair{
     width: 90%;
@@ -32,16 +44,35 @@
     align-items: center;
     column-gap: 10px;
 }
-.section-cart .contenair>div i{
-    font-size: 25px;
+.section-cart .contenair .lien{
+    display: flex;
+    column-gap: 25px;
+}
+.section-cart .contenair .lien a{
+    color: white !important;
+} 
+.section-cart .contenair div a{
+    text-decoration: none !important;
+    color: white !important;
+    font-weight: 500;
+    letter-spacing: 2px;
+}
+.section-cart .contenair div a .panier{
+    color: rgba(255, 255, 255, 0.849);
+    font-size: 23px;
 }
 .header{
     width: 100%;
     height: 80vh;
-    background:url('../bg/hero-bg.png');
+    /* background:#326771; */
+    background-image: url('../bg/pexels-negative-space-34600.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+}
+.header div{
+    width: 100%;
+    height: 80vh;background-color: #326671ad;;
 }
 
 
@@ -50,13 +81,31 @@
     width: 100%;
     height: auto;
 }
+.main .container{
+    width: 90%;
+    margin: auto;
+}
+.main .container .services{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 50px;
+}
+.main .container .services div{
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+}
 .main .contenair{
     width: 90%;
     margin: auto;
 }
 .main .contenair .text-boutique{
     width: 100%;
-    height: 40vh;
+    height: 20vh;
     background-color: white;
     text-align: center;
     display: flex;
@@ -65,12 +114,12 @@
     flex-direction: column;
     row-gap: 20px;
 }
-.main .contenair .produit{
-    width: 100%;
-    height: 10vh;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.main .container .produit{
+    width: 100% !important;
+    height: 10vh !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
 }
 .main .contenair .boutique{
     width: 100%;
@@ -103,14 +152,15 @@
 }
 .main .detail-boutique div{
     width: 100% !important;
-    height: 40vh;
-    background: linear-gradient(70deg, rgba(0, 255, 255, 0.678),rgba(0, 0, 255, 0.678));
+    height: 25vh;
+    background: #326771;
     display: flex;
     align-items: center;
     justify-content: center;
     text-transform: uppercase;
     font-weight: bold;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
+    border-radius: 5px !important;
 }
 .main .contenair .boutique .btn-primary:hover{
     background-color: #0d6efd !important;
@@ -147,33 +197,24 @@
 
 .footer{
     width: 100%;
-    height: auto;
-    background-color: blue;
+    height: 25vh;
+    background-color: #326771;
 }
-.footer .contenair{
-    width: 90%;
+.footer .copyright{
     margin: auto;
-    display: flex;
-    flex-direction: column;
-    row-gap: 20px;
-    justify-content: center;
-    align-items: center;
-}
-.footer .contenair .Techno{
-    margin-top: 20px;
-}
-.footer .contenair .copyright{
-    width: 100%;
-    margin-bottom: 5px;
+    width: 80% !important;
+    height: inherit;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
-.footer .contenair .copyright>div{
+.footer .copyright>div{
     display: flex;
     column-gap: 15px;
 }
-.footer .contenair .copyright>div i{
+.footer .copyright>div i{
     font-size: 30px;
+    color: black;
 }
 
 

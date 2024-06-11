@@ -1,0 +1,32 @@
+{% extends 'dashboard/dashboard.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="w-100 bg-light" style="border-radius:5px;height:80vh !important;">
+            <h3 class="text-center text-uppercase h-25 d-flex align-items-center justify-content-center bg-white mb-5">Votre Profil</h3>
+            <div class="container h-50">
+                <div class="d-flex align-items-center justify-content-center row h-100">
+                <form class="form-method" method="post" action="{{ path('app_admin_profil_edit',{'id' : profil.id}) }}">
+                    <div class="w-100 col-12 mb-3 d-flex jusity-content-between align-items-center gap-4">
+                        <label for="username" class="m-0 fs-6 w-20">Username</label>
+                        <input type="text" id="username" name="username" class="form-control w-80 text-bold" value="{{ profil.username }}">
+                    </div>
+                    <div class="col-12 mb-3 d-flex jusity-content-center align-items-center gap-4">
+                        <label for="username" class="m-0 fs-6 w-20">Mail</label>
+                        <input type="mail" id="mail" name="mail" class="form-control w-80 text-bold" value="{{ profil.Email }}"> 
+                    </div>
+                    <div class="col-12 mb-3 d-flex jusity-content-center align-items-center gap-4">
+                        <label for="pass" class="m-0 fs-6 w-20">Mot de Passe</label>  
+                        <input type="password" id="pass" name="password" class="form-control w-80 text-bold" >
+                    </div>
+                    <div class="w-100 d-flex justify-content-end mt-5">
+                        <button class="btn btn-primary" type="submit">Modifier</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

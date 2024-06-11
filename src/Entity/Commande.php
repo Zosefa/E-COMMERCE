@@ -33,11 +33,17 @@ class Commande
     #[ORM\JoinColumn(nullable: false)]
     private ?ModePaiement $ModeP = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $Facture = null;
-
     #[ORM\ManyToOne]
     private ?Vendeur $Vendeur = null;
+
+    #[ORM\ManyToOne(inversedBy: 'Commande')]
+    private ?Facture $facture = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $Montant = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $slug = null;
 
     public function getId(): ?int
     {
@@ -103,21 +109,9 @@ class Commande
 
         return $this;
     }
-
-    public function isFacture(): ?bool
-    {
-        return $this->Facture;
-    }
-
-    public function setFacture(?bool $Facture): static
-    {
-        $this->Facture = $Facture;
-
-        return $this;
-    }
     public function __toString()
     {
-        return $this->DateCommande;
+        return $this->getDateCommande();
     }
 
     public function getVendeur(): ?Vendeur
@@ -128,6 +122,41 @@ class Commande
     public function setVendeur(?Vendeur $Vendeur): static
     {
         $this->Vendeur = $Vendeur;
+
+        return $this;
+    }
+
+    public function getFactures(): ?Facture
+    {
+        return $this->facture;
+    }
+    public function setFactures(?Facture $Facture): static
+    {
+        $this->facture = $Facture;
+        
+        return $this;
+    }
+
+    public function getMontant(): ?float
+    {
+        return $this->Montant;
+    }
+
+    public function setMontant(?float $Montant): static
+    {
+        $this->Montant = $Montant;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

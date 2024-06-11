@@ -3,8 +3,13 @@
 namespace App\Repository;
 
 use App\Entity\Produit;
+use App\Entity\Vendeur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @extends ServiceEntityRepository<Produit>
@@ -16,18 +21,61 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProduitRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry,private PaginatorInterface $paginator)
     {
         parent::__construct($registry, Produit::class);
     }
 
-    public function findbyVendeur($vendeur){
+    public function findbyVendeur(Vendeur $vendeur){
         return $this->createQueryBuilder('p')
+            ->select('p')
+            ->where('p.Vendeur = :vendeur')
+            ->andWhere('p.QteDispo > 0')
+            ->setParameter('vendeur' , $vendeur)
+            ->getQuery()
+            ->getResult();
+    }
+    public function recherche($valeur,Vendeur $vendeur){
+        $query = $this->createQueryBuilder('produit')
+            ->select('produit'); 
+        if($valeur){
+            return $query
+                ->where(
+                $query->expr()->orX(
+                    $query->expr()->like('produit.Produit',':valeur')
+                    )
+                )
+                ->andWhere('produit.Vendeur = :vendeur')
+                ->setParameter('valeur',"%$valeur%")
+                ->setParameter('vendeur',$vendeur)
+                ->getQuery()
+                ->getResult();
+        } 
+    }
+    public function paginator(int $page,int $limit,Vendeur $vendeur): PaginationInterface
+    {
+        return $this->paginator->paginate(
+            $this
+            ->createQueryBuilder('p')
             ->select('p')
             ->where('p.Vendeur = :vendeur')
             ->setParameter('vendeur' , $vendeur)
             ->getQuery()
-            ->getResult();
+            ->getResult(),
+            $page,
+            $limit
+        );
+        // return new Paginator($this
+        // ->createQueryBuilder('p')
+        // ->select('p')
+        // ->where('p.Vendeur = :vendeur')
+        // ->setParameter('vendeur' , $vendeur)
+        // ->setFirstResult(($page - 1) * $limit )
+        // ->setMaxResults($limit)
+        // ->getQuery()
+        // ->setHint(Paginator::HINT_ENABLE_DISTINCT, false),
+        // false
+        // );
     }
 
     // public function findbyVendeur()

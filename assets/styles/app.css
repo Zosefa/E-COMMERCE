@@ -1,13 +1,12 @@
+
 .bg{
-    background-image: url('../bg/hero-bg.png') !important;
+    background:#326771;
     width: 100%;
     height: 100vh;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
+    text-align: center !important;
 }
 .text{
     width: 80%;
@@ -28,8 +27,8 @@
 }
 .client{
     width: 40%;
-    height: 40vh;
-    background-color: white;
+    height: 35vh;
+    background-color: rgba(255, 255, 255, 0.87);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,11 +37,12 @@
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
+    border-radius: 5px;
 }
 .vendeur{
     width: 40%;
-    height: 40vh;
-    background-color: white;
+    height: 35vh;
+    background-color: rgba(255, 255, 255, 0.87);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,5 +51,6 @@
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
+    border-radius: 5px;
 }
 

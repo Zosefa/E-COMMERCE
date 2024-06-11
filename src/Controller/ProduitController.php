@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Produit;
 use App\Form\ProduitType;
+use App\Form\UpdateProduitType;
 use App\Repository\ProduitRepository;
 use App\Repository\UserRepository;
 use App\Repository\VendeurRepository;
+use App\Service\Cryptage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,15 +20,30 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_VENDEUR')]
 class ProduitController extends AbstractController
 {
+    // private string $chipper = 'aes-256-cbc';
+    // private string $secretKey = '$_#&';
     #[Route('/',name: '_liste')]
-    public function liste(ProduitRepository $produitRepository,VendeurRepository $vendeurrepository): Response
+    public function liste(ProduitRepository $produitRepository,VendeurRepository $vendeurrepository,Request $request): Response
     {
+        $maxPage=0;
+        $page=0;
+        $recherche = $request->request->get('rech');
         $user = $this->getUser();
         $idvendeur = $vendeurrepository->getByUser($user);
         $vendeur = $vendeurrepository->find($idvendeur);
-        $produit = $produitRepository->findBy(['Vendeur'=>$vendeur]);
+        if(isset($recherche)){
+            $input = $request->request->get('recherche');
+            $produit = $produitRepository->recherche($input,$vendeur);
+        }else{
+            $page = $request->query->getInt('page',1);
+            $limit = 3;
+            $produit = $produitRepository->paginator($page,$limit,$vendeur);
+            $maxPage = ceil($produit->getTotalItemCount() / $limit);
+        }
         return $this->render('produit/index.html.twig',[
-            'produit' => $produit
+            'produit' => $produit,
+            'maxpage' => $maxPage,
+            'page' => $page
         ]);
     }
 
@@ -51,10 +68,19 @@ class ProduitController extends AbstractController
         ]);
     }
 
+    #[Route('/cryptage/{id}', name: '_cryptage')]
+    public function cryptage($id,Cryptage $cryptage){
+        $crypte = $cryptage->encrypt($id);
+        return $this->redirectToRoute('app_produit_update',['id' => $crypte]);
+    }
+
+
     #[Route('/update/{id}', name: '_update')]
-    public function update(Produit $produit, Request $request, EntityManagerInterface $em)
+    public function update($id, ProduitRepository $produitrepo, Request $request, EntityManagerInterface $em,Cryptage $cryptage)
     {
-        $form = $this->createForm(ProduitType::class,$produit);
+        $decrypt = $cryptage->decrypt($id);
+        $produit = $produitrepo->find($decrypt);
+        $form = $this->createForm(UpdateProduitType::class,$produit);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $em->flush();
@@ -65,5 +91,27 @@ class ProduitController extends AbstractController
             'form' => $form,
             'Produit' => $produit
         ]);
+    }
+
+    #[Route('/delete/{id}', name: '_delete')]
+    public function delete(Produit $produit, Request $request, EntityManagerInterface $em)
+    {
+        $em->remove($produit);
+        $em->flush();
+        $this->addflash('danger','Produit Supprimer');
+        return $this->redirectToRoute('app_produit_liste');
+    }
+
+    #[Route('/stock/{id}', name: '_stock')]
+    public function stock(Produit $produit, Request $request, EntityManagerInterface $em)
+    {
+        if($request->isMethod('POST')){
+            $qte = $produit->getQteDispo();
+            $newstock = $qte + $request->request->get('stock');
+            $produit->setQteDispo($newstock);
+            $em->flush();
+            $this->addflash('success','Stock Ajouter');
+            return $this->redirectToRoute('app_produit_liste');
+        } 
     }
 }

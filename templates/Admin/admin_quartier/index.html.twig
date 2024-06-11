@@ -1,0 +1,108 @@
+{% extends 'dashboard/dashboard.html.twig' %}
+
+{% block title %}Quartier{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid py-4">
+    {{ include('partiel/flash.html.twig') }}
+    <form action='' method="POST" class="input-group mb-5" style="height: 40px !important;">
+        <input type="text" class="form-control" placeholder="recherche..." name="recherche"
+            style="height: inherit !important;">
+        <button class="btn btn-light" type="submit" name='rech' style="height: inherit !important;">
+            <i class="fas fa-search text-dark"></i>
+        </button>
+    </form>
+    <table class="table table-responsive table-hover text-dark"
+        style="text-align: center;border-radius:20px !important;">
+        <thead class="bg-light text-bold">
+            <tr>
+                <td>Quartier</td>
+                <td>Ville</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody class="bg-white">
+            {% for quartiers in quartier %}
+            <tr>
+                <td style="font-size:13px !important;">{{ quartiers.Quartier }}</td>
+                <td style="font-size:13px !important;">{{ quartiers.Ville.Ville }}</td>
+                <td style="font-size:13px !important;">
+
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ quartiers.id }}">
+                    <i class="far fa-edit"></i>
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop{{ quartiers.id }}" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Modification</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <form method="post" action="{{ path('admin_app_admin_quartier_edit',{'id' : quartiers.id}) }}">
+                                <div class="modal-body">
+                                    <input type="text" placeholder="modification ville" class="form-control mb-2" name="quartier" value="{{ quartiers.Quartier }}">
+                                    <select name="ville" class="form-select">
+                                        {% for villes in ville %}
+                                            {% if villes.Ville == quartiers.Ville.Ville %}
+                                            <option value="{{ villes.id }}" class="mb-1" selected>{{ villes.Ville }}</option>
+                                            {% else %}
+                                            <option value="{{ villes.id }}" class="mb-1">{{ villes.Ville }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Modifier</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7" class="text-bold">AUCUNE ENREGISTREMENT</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Nouveau
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Nouveau Ville</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post" action="{{ path('admin_app_admin_quartier_new') }}">
+                    <div class="modal-body">
+                        <input type="text" placeholder="nouveau quartier" class="form-control mb-2" name="quartier">
+                        <select name="ville" class="form-select">
+                            {% for villes in ville %}
+                                <option value="{{ villes.id }}" class="mb-1">{{ villes.Ville }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -6,11 +6,12 @@ $(document).ready(function(){
 		if( scroll > 60 ){		
 			$(".section-cart").addClass("section-cart-fixed");	
             $(".client").css({'display':'none'});	
-            $(".section-cart .contenair div i").css({'color':'white !important'});
+			$(".lien a").css({'color':'white !important'});
+            $(".panier").css({'color':'white !important'});
 		} else {
 			$(".section-cart").removeClass("section-cart-fixed");
-            $(".client").css({'display':'block'});	
-            $(".section-cart .contenair div i").css({'color':'black !important'});
+            $(".client").css({'display':'flex'});	
+            $(".panier").css({'color':'black !important'});
 		}
 	});	
 });

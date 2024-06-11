@@ -18,8 +18,9 @@
     <div class="form-box">
         <div class="form-value">
             <form method="post">
+                {{ include('partiel/flash.html.twig') }}
                 {% if error %}
-                    <div class="alert alert-danger">Il y a une Erreur</div>
+                    <div class="alert alert-danger">MOT DE PASSE INCORRECTE</div>
                 {% endif %}
 
                 {% if app.user %}

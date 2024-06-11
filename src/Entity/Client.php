@@ -15,7 +15,7 @@ class Client
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255)] 
     private ?string $Nom = null;
 
     #[ORM\Column(length: 255)]
@@ -33,6 +33,12 @@ class Client
 
     #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: 'Client')]
     private Collection $commandes;
+
+    #[ORM\ManyToOne]
+    private ?Quartier $Quartier = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $slug = null;
 
     public function __construct()
     {
@@ -136,5 +142,29 @@ class Client
     public function __toString()
     {
         return $this->getNom();
+    }
+
+    public function getQuartier(): ?Quartier
+    {
+        return $this->Quartier;
+    }
+
+    public function setQuartier(?Quartier $Quartier): static
+    {
+        $this->Quartier = $Quartier;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }

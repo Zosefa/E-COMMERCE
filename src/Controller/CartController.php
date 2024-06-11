@@ -24,7 +24,7 @@ class CartController extends AbstractController
                 'produit' =>$produitRepository->find($id),
                 'quantiter' => $quantite
             ]; 
-        }
+        } 
         $total = 0;
         if(!empty($panierWithData)){
             foreach ($panierWithData as $key) {
@@ -45,11 +45,14 @@ class CartController extends AbstractController
     #[Route('/panier/add/{id}/{boutique}', name: 'app_cart_add')]
     public function add($id,$boutique,SessionInterface $session,Request $request)
     { 
-            $panier = $session->get('panier',[]);
-            if(!empty($panier[$id])){
-                $panier[$id]++;
-            }else{
-                $panier[$id]=1;
+        $panier = $session->get('panier',[]);
+            if($request->isMethod('post')){
+                $qte = $request->request->get('qte');
+                if(!empty($panier[$id])){
+                    $panier[$id] += $qte;
+                }else{
+                    $panier[$id]=$qte;
+                }
             }
             // $panier[$id] = $qte;
             $session->set('panier',$panier);         

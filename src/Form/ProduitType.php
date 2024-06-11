@@ -24,10 +24,15 @@ class ProduitType extends AbstractType
             ->add('Produit',TextType::class)
             ->add('Description',TextareaType::class)
             ->add('Prix',IntegerType::class)
-            ->add('ImageFile',FileType::class)
+            ->add('QteDispo',IntegerType::class,[
+                'label' => 'Quantite Disponible' 
+            ])
+            ->add('ImageFile',FileType::class,[
+                'label' => 'Image'
+            ])
             ->add('Categorie', EntityType::class, [
                 'class' => Categorie::class,
-'choice_label' => 'Categorie',
+                'choice_label' => 'Categorie',
             ])
         ;
     }

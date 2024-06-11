@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Image;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
@@ -32,7 +33,7 @@ class Produit
 
     #[Vich\UploadableField(mapping: 'produit',fileNameProperty: 'Photo')]
     #[Assert\Image()]
-    private ?File $ImageFile=null;
+    private ?File $ImageFile = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -45,6 +46,21 @@ class Produit
     #[ORM\Column(nullable: true)]
     private ?int $QteDispo = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $slug = null;
+
+    public function getImageFile(): ?File
+    {
+        return $this->ImageFile;
+    }
+    
+    public function  setImageFile(?File $ImageFile): static
+    {
+        $this->ImageFile = $ImageFile;
+
+        return $this;
+    }
+ 
     public function getId(): ?int
     {
         return $this->id;
@@ -91,7 +107,7 @@ class Produit
         return $this->Photo;
     }
 
-    public function setPhoto(string $Photo): static
+    public function setPhoto(?string $Photo): static
     {
         $this->Photo = $Photo;
 
@@ -121,16 +137,6 @@ class Produit
 
         return $this;
     }
-    public function getImageFile(): ?File
-    {
-        return $this->ImageFile;
-    }
-    public function  setImageFile(?File $ImageFile): static
-    {
-        $this->ImageFile=$ImageFile;
-
-        return $this;
-    }
 
     public function getQteDispo(): ?int
     {
@@ -146,5 +152,17 @@ class Produit
     public function __toString()
     {
         return $this->getProduit();
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }

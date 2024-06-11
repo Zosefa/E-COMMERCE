@@ -1,34 +1,68 @@
 {% extends 'boutique/Boutique.html.twig' %}
 {% block title %} Boutique de ..... {% endblock %}
 {% block body %}
-    <div class="main">
-        <div class="container">
-            <div class="produit">
-                <h4>PRODUIT RECENT</h4>
-                <button class="btn btn-primary">VOIR TOUS</button>
-            </div>       
-            
-            <div class="row">
-                {% for produit in produits %}
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                        <div class=" card " style="margin:20px 2px;">
-                            <img class="card-img-top" src="{{ vich_uploader_asset(produit, 'ImageFile') }}" alt="Card image">
-                            <div class="card-body">
-                                <h4 class="card-title">{{ produit.Produit }}</h4>
-                                <p class="prix">{{ produit.Prix }} Ar</p>
-                            </div>
-                            <div class="card-footer">
-                                <div>
-                                    <button class="btn btn-primary view">View</button>
-                                    <a href="{{ path('app_cart_add',{id:produit.id,boutique:boutiques}) }}"class="btn btn-warning">Add To Cart</a>
+<div class="main">
+    <div class="container">
+        <div class="produit">
+            <h4>PRODUIT RECENT</h4>
+            <button class="btn btn-primary">VOIR TOUS</button>
+        </div>
+        <div class="row">
+            {% for produit in produits %}
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <div class=" card " style="margin:20px 2px;">
+                    <div class="w-100" style="height:30vh;overflow:hidden;">
+                        <img class="img-fluid" src="{{ vich_uploader_asset(produit, 'ImageFile') }}" alt="Card image" style="width:100%;">
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">{{ produit.Produit }}</h4>
+                        <p class="prix">{{ produit.Prix }} Ar</p>
+                    </div>
+                    <div class="card-footer">
+                        <div>
+                            <button class="btn btn-primary view">View</button>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop{{ produit.id }}" style="color: white !important;font-weight: bold;">
+                                Panier
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop{{ produit.id }}" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Ajouter {{ produit.Produit }} au panier</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <form action="{{ path('app_cart_add',{id:produit.id,boutique:boutiques}) }}" method="post">
+                                            <div class="modal-body">
+                                                <input type="number" class="form-control" placeholder="Quantite a ajouter" name="qte">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary btn-sm"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-success btn-sm">Ajouter</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div> 
-                    </div>  
-                {% endfor %}
+                        </div>
+                    </div>
+                </div>
             </div>
+            {% else %}
+            <div
+                style="width: 100%;height: 20vh;display: flex;justify-content: center;align-items: center;text-transform: uppercase;font-weight: bold;">
+                Aucun Produit Disponible pour le moment...
+            </div>
+            {% endfor %}
         </div>
     </div>
-    </div>
-        </div>
+</div>
+</div>
+</div>
 {% endblock %}

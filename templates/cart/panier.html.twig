@@ -45,7 +45,7 @@
                 <label for="modep" style="width:50%;text-align:left;">
                     <strong>Mode de Paiement</strong>
                 </label>
-                <form action="{{ path('app_commande_valider') }}" method="post" style="display:flex;flex-direction: column;row-gap: 10px;">
+                <form action="{{ path('app_commande_valider',{total:total}) }}" method="post" style="display:flex;flex-direction: column;row-gap: 10px;">
                     <select class="form-select" name="modep" style="width:100% !important;">
                         {% for modemp in ModeMp %}
                             <option value="{{ modemp.id }}">{{ modemp.ModeP }}</option>

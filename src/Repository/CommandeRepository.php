@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Commande;
+use App\Entity\Facture;
 use App\Entity\Vendeur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -32,7 +33,21 @@ class CommandeRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
+    public function selectAll(Facture $facture){
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->where('c.facture = :facture')
+            ->setParameter('facture',$facture)
+            ->getQuery()
+            ->getResult();
+    }
+    public function getDernierCommande($n){
+        return $this->createQueryBuilder('commande')
+            ->orderBy('commande.id','DESC')
+            ->setMaxResults($n)
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return Commande[] Returns an array of Commande objects
 //     */

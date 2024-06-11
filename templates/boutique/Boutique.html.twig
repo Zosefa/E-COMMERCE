@@ -1,53 +1,99 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}E-VENTE{% endblock %}</title>
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('boutique') }}
-        {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('boutique') }} 
-            {% block importmap %} {{ importmap('boutique') }} {% endblock %} 
-        {% endblock %}
-        <link rel="stylesheet" href="{{ asset('wow/animate.css') }}">
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}E-VENTE{% endblock %}</title>
+    {% block stylesheets %}
+    {{ encore_entry_link_tags('boutique') }}
+    {% endblock %}
+
+    {% block javascripts %}
+    {{ encore_entry_script_tags('boutique') }}
+    {% block importmap %} {{ importmap('boutique') }} {% endblock %}
+    {% endblock %}
+    <link rel="stylesheet" href="{{ asset('wow/animate.css') }}">
+</head>
+
+<body>
     <div class="container">
         {{ include('partiel/flash.html.twig') }}
     </div>
-    {# <div class="wow fadeInDown animated" data-wow-duration="1s" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1s; animation-delay: 300ms; animation-name: fadeInDown;">Coucou</div> #}
-    <div class="client">
-        <h6><i class="fas fa-user"></i> {{ app.user.userIdentifier }}</h6>    
-    </div>
-    <div class="section-cart">
-        <div class="contenair">
-            <h4>E-VENTE</h4>
-                <form action="">
-                    <input type="text" name="article" class="form-control">
-                    <button class="btn btn-primary" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
-                <div>             
+    {# <div class="wow fadeInDown animated" data-wow-duration="1s" data-wow-delay="300ms"
+        style="visibility: visible; animation-duration: 1s; animation-delay: 300ms; animation-name: fadeInDown;">Coucou
+    </div> #}
+    <div style="width: 100%; background-color: #326771;margin: 0px;">
+        <div class="client">
+            <h6><i class="fas fa-user"></i> {{ app.user.userIdentifier }}</h6>
+            <div>
+                <h6>PRODEVSEO</h6>
+                <h6>AKADINDRATOMBO</h6>
+                <h6>+261 34 35 624 62</h6>
+            </div>
+        </div>
+        <div class="section-cart">
+            <div class="contenair">
+                <h4>E-VENTE</h4>
+                <div class="lien">
+                    <a href="{{ path('boutique_index') }}">HOME</a>
+                    <a href="">SERVICES</a>
+                    <a href="">BOUTIQUE</a>
+                    <a href="contact">CONTACT</a>
+                </div>
+                <div>
                     <a href="{{ path('app_cart') }}">
-                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-shopping-cart panier"></i>
                     </a>
-                </div>             
+                </div>
+            </div>
         </div>
     </div>
+    
 
     <div class="header">
+        <div>
         
+        </div>
     </div>
     {% block body %}
-    {{ include('partiel/flash.html.twig') }}
+        {{ include('partiel/alert.html.twig') }}
+    <div style="width: 100%; margin-top: 30px;margin-bottom: 0px; text-align: center;">
+        <h1>NOS SERVICES</h1>
+    </div>
     <div class="main">
+        <div class="container">
+            <div class="services" id="service">
+                <div class="service">
+                    <div style="width: 50%;">
+                        <img src="{{ asset('image/boutique/hero-bg.png') }}" alt="" style="width: 100%;">
+                    </div>
+                    <div style="width: 50%;display: flex;flex-direction: column;row-gap: 10px;text-align: center;">
+                        <div style="width: 80%; margin: auto;display: flex;flex-direction: column;row-gap: 10px;text-align: center;">
+                            <h4>AU COMMERCANT</h4>
+                            <h6 style="text-align: left;">
+                                Une possibilite de vendre tous vos produits par l'intermediare de notre Site Web E-Commerce , securise et sans engagement, generation de facture automatique
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="service">
+                    <div style="width: 50%;display: flex;flex-direction: column;row-gap: 10px;text-align: center;">
+                        <div style="width: 80%; margin: auto;display: flex;flex-direction: column;row-gap: 10px;text-align: center;">
+                            <h4>AU CLIENT</h4>
+                            <h6 style="text-align: left !important;">
+                                Une possibilite d'acheter de divers produits informatiques par l'intermediare de notre Site Web E-Commerce, gagne de temps pour l'achat
+                            </h6>
+                        </div>
+                    </div>
+                    <div style="width: 50%;">
+                        <img src="{{ asset('image/boutique/modern-stationary-collection-arrangement.jpg') }}" alt="" style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="contenair">
             <div class="text-boutique">
-                <h3>TOUS LES BOUTIQUES QUI TRAVAILLENT AVEC NOUS SONT FIABLE ET DIGNE DE CONFIANCE</h3>
-                <button class="btn btn-warning">Voir</button>
+                <h3>TOUS LES BOUTIQUES QUI TRAVAILLENT DEJAS AVEC NOUS</h3>
             </div>
             <div class="boutique">
                 <h4>BOUTIQUE</h4>
@@ -55,32 +101,57 @@
             </div>
             <div class="row">
                 {% for vendeur in vendeurs %}
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                        {# <div class=" card " style="margin:20px 2px;">
-                            <img class="card-img-top" src="{{ vich_uploader_asset(produit, 'ImageFile') }}" alt="Card image">
-                            <div class="card-body">
-                                <h4 class="card-title">{{ produit.Produit }}</h4>
-                                <p class="prix">{{ produit.Prix }} Ar</p>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                    {# <div class=" card " style="margin:20px 2px;">
+                        <img class="card-img-top" src="{{ vich_uploader_asset(produit, 'ImageFile') }}"
+                            alt="Card image">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ produit.Produit }}</h4>
+                            <p class="prix">{{ produit.Prix }} Ar</p>
+                        </div>
+                        <div class="card-footer">
+                            <div>
+                                <button class="btn btn-primary view">View</button>
+                                <a href="{{ path('app_cart_add',{id:produit.id}) }}" class="btn btn-warning">Add To
+                                    Cart</a>
                             </div>
-                            <div class="card-footer">
-                                <div>
-                                    <button class="btn btn-primary view">View</button>
-                                    <a href="{{ path('app_cart_add',{id:produit.id}) }}"class="btn btn-warning">Add To Cart</a>
-                                </div>
-                            </div>
-                        </div>  #}
-                        <a class="detail-boutique" href="{{ path('boutique_liste',{boutique:vendeur.Vendeur}) }}">
-                            <div>{{ vendeur.Vendeur }}</div>
-                        </a>
-                    </div>  
+                        </div>
+                    </div> #}
+                    <a class="detail-boutique" href="{{ path('boutique_liste',{boutique:vendeur.Vendeur}) }}">
+                        <div>{{ vendeur.Vendeur }}</div>
+                    </a>
+                </div>
                 {% endfor %}
             </div>
         </div>
-    {% endblock %}
-    {{ include('footer/footer.html.twig') }}
+        <div class="container">
+            <h3 class="" style="text-align: center;margin-bottom: 40px;">CONTACTEZ-NOUS</h3>
+            <div class="contact" id="#contact">
+                <form action="">
+                    <div class="row" style="display: flex;flex-direction: column;row-gap: 25px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <input type="text" name="" id="" placeholder="Name" class="form-control">
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <input type="email" name="" id="" placeholder="Email" class="form-control">
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <textarea name="" id="" placeholder="Message" class="form-control" style="height: 30vh;"></textarea>
+                        </div>
+                        <div style="width: 100%;display:flex;justify-content: flex-end;margin-bottom: 40px;">
+                            <input type="submit" value="ENVOYER" class="btn btn-outline-success">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        {% endblock %}
+        {{ include('footer/footer.html.twig') }}
 
         <script src="{{ asset('jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('wow/wow.min.js') }}"></script>
         <script src="{{ asset('js/boutique.js') }}"></script>
-    </body>
+</body>
+
 </html>

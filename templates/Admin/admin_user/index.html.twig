@@ -1,0 +1,190 @@
+{% extends 'dashboard/dashboard.html.twig' %}
+
+{% block title %}Boutique{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid py-4">
+    <form action='' method="POST" class="input-group mb-5" style="height: 40px !important;">
+            <input type="text" class="form-control" placeholder="recherche..." name="recherche" style="height: inherit !important;">
+            <button class="btn btn-light" type="submit" name='rech' style="height: inherit !important;">
+                <i class="fas fa-search text-dark"></i>
+            </button>
+        </form>
+    <div>
+        <button class="btn btn-success me-1 compteactive" style="border:2px solid #2dce89 !important;">Compte</button>
+        <button class="btn btn-outline-light me-1 compteattent" style="border:2px solid ##e9ecef !important;">En attante d'activation</button>
+        <button class="btn btn-outline-danger comptedesactiver" style="border:2px solid #f5365c !important;">Descativer</button>
+    </div>
+    <table class="table table-responsive table-hover text-dark tableactive" style="text-align: center;border-radius:20px !important;">
+        <thead class="bg-light">
+            <tr class="text-bold">
+                <td>Username</td>
+                <td>Email</td>
+                <td>Role</td>
+                <td>Compte</td>
+            </tr>
+        </thead>
+        <tbody class="bg-white">
+            {% for userr in usersActive %}
+            {% if userr.roles != ['ROLE_ADMIN'] %}
+            <tr>
+                <td style="font-size:13px !important;">{{ userr.username }}</td>
+                <td style="font-size:13px !important;">{{ userr.Email }}</td>
+                <td style="font-size:13px !important;">
+                    {% if userr.roles == ['ROLE_CLIENT'] %}
+                        CLIENT
+                    {% else %}
+                        VENDEUR
+                    {% endif %}     
+                </td>
+                <td>
+                    <form class="form-check form-switch w-100 d-flex justify-content-center">
+                        <input class="form-check-input toggle-active-checkbox" type="checkbox" id="rememberMe" data-id="{{ userr.id }}" {% if userr.active %}checked{% endif %}>
+                    </form>
+                </td>
+            </tr>
+            {% endif %}
+            {% else %}
+            <tr>
+                <td colspan="7">AUCUN ENREGISTREMENT</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table class="table table-responsive table-hover text-dark tablenonactive d-none" style="text-align: center;border-radius:20px !important;">
+        <thead class="bg-light">
+            <tr class="text-bold">
+                <td>Username</td>
+                <td>Email</td>
+                <td>Role</td>
+                <td>Compte</td>
+            </tr>
+        </thead>
+        <tbody class="bg-white">
+            {% for userr in usersNonActive %}
+            {% if userr.roles != ['ROLE_ADMIN'] %}
+            <tr>
+                <td style="font-size:13px !important;">{{ userr.username }}</td>
+                <td style="font-size:13px !important;">{{ userr.Email }}</td>
+                <td style="font-size:13px !important;">
+                    {% if userr.roles == ['ROLE_CLIENT'] %}
+                        CLIENT
+                    {% else %}
+                        VENDEUR
+                    {% endif %}     
+                </td>
+                <td>
+                    <form class="form-check form-switch w-100 d-flex justify-content-center">
+                        <input class="form-check-input toggle-active-checkbox" type="checkbox" id="rememberMe" data-id="{{ userr.id }}" {% if userr.active %}checked{% endif %}>
+                    </form>
+                </td>
+            </tr>
+            {% endif %}
+            {% else %}
+            <tr>
+                <td colspan="7">AUCUN ENREGISTREMENT</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table class="table table-responsive table-hover text-dark tabledesactiver d-none" style="text-align: center;border-radius:20px !important;">
+        <thead class="bg-light">
+            <tr class="text-bold">
+                <td>Username</td>
+                <td>Email</td>
+                <td>Role</td>
+                <td>Compte</td>
+            </tr>
+        </thead>
+        <tbody class="bg-white">
+            {% for userr in Descativer %}
+            {% if userr.roles != ['ROLE_ADMIN'] %}
+            <tr>
+                <td style="font-size:13px !important;">{{ userr.username }}</td>
+                <td style="font-size:13px !important;">{{ userr.Email }}</td>
+                <td style="font-size:13px !important;">
+                    {% if userr.roles == ['ROLE_CLIENT'] %}
+                        CLIENT
+                    {% else %}
+                        VENDEUR
+                    {% endif %}     
+                </td>
+                <td>
+                    <form class="form-check form-switch w-100 d-flex justify-content-center">
+                        <input class="form-check-input toggle-active-checkbox" type="checkbox" id="rememberMe" data-id="{{ userr.id }}" {% if userr.active %}checked{% endif %}>
+                    </form>
+                </td>
+            </tr>
+            {% endif %}
+            {% else %}
+            <tr>
+                <td colspan="7">AUCUN ENREGISTREMENT</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+<script src="{{ asset('jquery.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('.toggle-active-checkbox').change(function() {
+            var userId = $(this).data('id');
+            var url = '{{ path("admin_app_admin_user_toggle", {"id": "ID"}) }}'.replace('ID', userId);
+            
+            $.ajax({ 
+                url: url,
+                type: 'POST',
+                success: function(response) {
+                    console.log('User active status updated:', response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error updating user active status:', error);
+                }
+            });
+        });
+        $('.compteactive').click(function(){
+            $('.tableactive').removeClass('d-none');
+            $('.tablenonactive').addClass('d-none');
+            $('.tabledesactiver').addClass('d-none');
+
+            $('.compteactive').removeClass('btn-outline-success');
+            $('.compteattent').removeClass('btn-light');
+            $('.comptedesactiver').removeClass('btn-danger');
+
+            $('.compteattent').addClass('btn-outline-light');
+            $('.comptedesactiver').addClass('btn-outline-danger');
+            $('.compteactive').addClass('btn-success');
+        });
+        $('.compteattent').click(function(){
+            $('.tableactive').addClass('d-none');
+            $('.tablenonactive').removeClass('d-none');
+            $('.tabledesactiver').addClass('d-none');
+
+            $('.compteactive').removeClass('btn-success');
+            $('.compteattent').removeClass('btn-outline-light');
+            $('.comptedesactiver').removeClass('btn-danger');
+
+            $('.compteattent').addClass('btn-light');
+            $('.comptedesactiver').addClass('btn-outline-danger');
+            $('.compteactive').addClass('btn-outline-success');
+        });
+        $('.comptedesactiver').click(function(){
+            $('.tableactive').addClass('d-none');
+            $('.tablenonactive').addClass('d-none');
+            $('.tabledesactiver').removeClass('d-none');
+
+            $('.compteactive').removeClass('btn-success');
+            $('.compteattent').removeClass('btn-light');
+            $('.comptedesactiver').removeClass('btn-outline-danger');
+
+            $('.compteattent').addClass('btn-outline-light');
+            $('.comptedesactiver').addClass('btn-danger');
+            $('.compteactive').addClass('btn-outline-success');
+        });
+    });
+</script>
+{% endblock %}

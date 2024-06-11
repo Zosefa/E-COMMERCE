@@ -1,10 +1,13 @@
 {% extends 'produit.html.twig' %}
 
-{% block title %}Hello ProduitController!{% endblock %}
+{% block title %}INSRTION PRODUIT{% endblock %}
 
 {% block body %}
+<div class="form" style="align-items: center;
+align-content: center;" >
+<div class="mt-4">
     {{ form_start(form) }}
-            <div class="row">  
+            <div class="row mx-auto">  
                 <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12">
                     {{ form_row(form.Produit) }}
                 </div>
@@ -17,12 +20,17 @@
                 <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12">
                     {{ form_row(form.ImageFile) }}
                 </div>
+                {{ form_row(form.QteDispo) }}
                 {{ form_row(form.Description) }}
             </div>
-            <div style="width:100%;display:flex;justify-content:space-between;align-items:center;">
+            <div style="width:100%;display:flex;justify-content: flex-end;align-items:center; gap: .5rem;">
                 <a href="{{ path('app_produit_liste') }}" class="btn btn-danger">ANNULER</a>
                 <button class="btn btn-success" type="submit">AJOUTER</button>
             </div>
             
         {{ form_end(form) }}
+</div>
+
+</div>
+
 {% endblock %}

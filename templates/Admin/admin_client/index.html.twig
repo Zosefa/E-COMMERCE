@@ -1,0 +1,43 @@
+{% extends 'dashboard/dashboard.html.twig' %}
+
+{% block title %}Boutique{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid py-4">
+    <form action='' method="POST" class="input-group mb-5" style="height: 40px !important;">
+            <input type="text" class="form-control" placeholder="recherche..." name="recherche" style="height: inherit !important;">
+            <button class="btn btn-light" type="submit" name='rech' style="height: inherit !important;">
+                <i class="fas fa-search text-dark"></i>
+            </button>
+        </form>
+    <table class="table table-responsive table-hover text-dark" style="text-align: center;border-radius:20px !important;">
+        <thead class="bg-light">
+            <tr class="text-bold">
+                <td>Nom</td>
+                <td>Prenom</td>
+                <td>Tel</td>
+                <td>Adresse</td>
+                <td>Quartier</td>
+                <td>User</td>
+            </tr>
+        </thead>
+        <tbody class="bg-white">
+            {% for clients in client %}
+            <tr style="font-size:13px !important;">
+                <td>{{ clients.Nom }}</td>
+                <td>{{ clients.Prenom }}</td>
+                <td>{{ clients.TelC }}</td>
+                <td>{{ clients.Adresse }}</td>
+                <td>{{ clients.Quartier.Quartier | default('') }}</td>
+                <td>{{ clients.users.username }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7">AUCUN PRODUIT ENREGISTRER</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
